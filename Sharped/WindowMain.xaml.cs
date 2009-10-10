@@ -24,6 +24,7 @@ namespace Sharped
         public WindowMain()
         {
             InitializeComponent();
+            doHello();
         }
 
         #region textbox
@@ -188,7 +189,7 @@ namespace Sharped
                 stream.Close();
             }
         }
-        protected void doHello(object sender, EventArgs e)
+        protected void doHello()
         {
             TextRange range = new TextRange(codeTextBox.Document.ContentStart, codeTextBox.Document.ContentEnd);
             range.Text = "package Hello.World\n{\n\tclass HelloWorld\n\t{\n\t\tpublic static function GetHelloWorld():String \n\t\t{\n\t\t\treturn \"Hello World From JScript\";\n\t\t}\n\t}\n}";
