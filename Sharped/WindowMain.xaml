@@ -1,6 +1,7 @@
 ﻿<Window x:Class="Sharped.WindowMain"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:custom="clr-namespace:ShControls;assembly=ShControls"
     Title="Sharped" Height="353" Width="639" PreviewKeyUp="Window_PreviewKeyUp">
     <Grid>
         <Grid.RowDefinitions>
@@ -21,26 +22,8 @@
                 <MenuItem Header="_Exit" ToolTip="Close application" Click="ExitMenuItem_Click"/>
             </MenuItem>
         </Menu>
-
-            <RichTextBox Grid.Row="1" FontFamily="CournerNew" FontSize="14" 
-                     TextChanged="RichTextBox_TextChanged"
-                     ScrollViewer.CanContentScroll="True " 
-                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                     Name="TextInput">
-            <RichTextBox.Resources>
-                <Style TargetType="{x:Type Paragraph}">
-                    <Setter Property="Margin" Value="0"/>
-                </Style>
-            </RichTextBox.Resources>
-            <FlowDocument>
-                <Paragraph>
-                    This is a richTextBox. I can
-                    <Bold>Bold</Bold> ,
-                    <Italic>Italicize</Italic> ,
-                    <Hyperlink>Hyperlink stuff</Hyperlink> right in my document.
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        <custom:CodeArea Grid.Row="1" Name="codeBox">
+        </custom:CodeArea>
         <TextBox Grid.Row="2" FontFamily="CournerNew" FontSize="14">
         </TextBox>
     </Grid>

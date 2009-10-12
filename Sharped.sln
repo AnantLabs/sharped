@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharped", "Sharped\Sharped.csproj", "{07A471CD-581F-4D2C-8E49-B1014A1D9BB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShControls","ShControls\ShControls.csproj", "{A3C4C154-8DA0-4921-8169-96CB7649E819}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{07A471CD-581F-4D2C-8E49-B1014A1D9BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07A471CD-581F-4D2C-8E49-B1014A1D9BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07A471CD-581F-4D2C-8E49-B1014A1D9BB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3C4C154-8DA0-4921-8169-96CB7649E819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3C4C154-8DA0-4921-8169-96CB7649E819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3C4C154-8DA0-4921-8169-96CB7649E819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3C4C154-8DA0-4921-8169-96CB7649E819}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
