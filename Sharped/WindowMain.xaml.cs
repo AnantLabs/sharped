@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using Microsoft.Win32;
 
 namespace Sharped
 {
@@ -44,9 +45,48 @@ namespace Sharped
             InitializeComponent();
         }
 
+        /// <summary>
+        /// file loaded in editor
+        /// </summary>
+        string _filename = "";
+
         private void RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             //TODO:
+        }
+
+        private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.SystemKey == Key.LeftAlt || e.SystemKey == Key.RightAlt)
+            {
+                IsMainMenuVisible = !IsMainMenuVisible;
+            }
+        }
+
+
+        private void OpenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+
+            dlg.InitialDirectory = "c:\\";
+            dlg.Filter = "C# source files (*.cs)|*.cs|All Files (*.*)|*.*";
+            dlg.RestoreDirectory = true;
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                _filename = dlg.FileName;
+                LoadTextFile(TextInput, _filename);
+            }
+        }
+
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SaveTextFile(TextInput, _filename);
         }
 
         private void LoadTextFile(RichTextBox richTextBox, string filename)
@@ -59,12 +99,20 @@ namespace Sharped
             }
         }
 
-        private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
+        private void SaveTextFile(RichTextBox richTextBox, string filename)
         {
-            if (e.SystemKey == Key.LeftAlt || e.SystemKey == Key.RightAlt)
+            using (StreamWriter streamWriter = new StreamWriter(filename))
             {
-                IsMainMenuVisible = !IsMainMenuVisible;
+                string text = GetText(richTextBox);
+                streamWriter.Write(text);
             }
+        }
+
+        private string GetText(RichTextBox richTextBox)
+        {
+            // use a TextRange to fish out the Text from the Document
+            TextRange textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+            return textRange.Text;
         }
     }
 }
