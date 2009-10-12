@@ -1,0 +1,47 @@
+﻿<Window x:Class="Sharped.WindowMain"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Sharped" Height="353" Width="639" PreviewKeyUp="Window_PreviewKeyUp">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="1*"></RowDefinition>
+            <RowDefinition  Height="9*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu Name="mainMenu" HorizontalAlignment="Left" VerticalAlignment="Top" > 
+            <!--
+            Visibility="{Binding Path=IsMainMenuVisibile,
+            RelativeSource={RelativeSource AncestorType=Window, Mode=FindAnchestor},
+            Converter={StaticResource BooleanToVisibilityConverter}}"
+            -->
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open"  ToolTip="Open a file"/>
+                <MenuItem Header="_Save"  ToolTip="Save file"/>
+                <Separator/>
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+        </Menu>
+
+            <RichTextBox Grid.Row="1" FontFamily="CournerNew" FontSize="14" 
+                     TextChanged="RichTextBox_TextChanged"
+                     ScrollViewer.CanContentScroll="True" 
+                     ScrollViewer.VerticalScrollBarVisibility="Visible"
+                     Name="TextInput">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+            <FlowDocument>
+                <Paragraph>
+                    This is a richTextBox. I can
+                    <Bold>Bold</Bold> ,
+                    <Italic>Italicize</Italic> ,
+                    <Hyperlink>Hyperlink stuff</Hyperlink> right in my document.
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <TextBox Grid.Row="2" FontFamily="CournerNew" FontSize="14">
+        </TextBox>
+    </Grid>
+</Window>
