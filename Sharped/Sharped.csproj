@@ -105,7 +105,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sharped.Controls\ShControls.csproj">
+    <ProjectReference Include="..\ShControls\ShControls.csproj">
       <Project>{A3C4C154-8DA0-4921-8169-96CB7649E819}</Project>
       <Name>ShControls</Name>
     </ProjectReference>
