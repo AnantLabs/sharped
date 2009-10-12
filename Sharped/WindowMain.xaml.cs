@@ -45,53 +45,6 @@ namespace Sharped
             InitializeComponent();
         }
 
-        /// <summary>
-        /// file loaded in editor
-        /// </summary>
-        string _filename = "";
-
-        private void RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (TextInput.Document == null)
-                return;
-
-            // clear all properties (we are going to color text ourselves)
-            TextRange documentRange = new TextRange(TextInput.Document.ContentStart, TextInput.Document.ContentEnd);
-            documentRange.ClearAllProperties();
-
-            // now let’s create navigator to go though the text and hightlight it
-            TextPointer navigator = TextInput.Document.ContentStart;
-            while (navigator.CompareTo(TextInput.Document.ContentEnd) < 0)
-            {
-                TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
-                if (context == TextPointerContext.ElementStart && navigator.Parent is Run)
-                {
-                    //CheckWordsInRun((Run)navigator.Parent);
-                }
-                navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
-            }
-
-            //color text
-            TextInput.TextChanged -= this.RichTextBox_TextChanged;
-            TextInput.TextChanged += this.RichTextBox_TextChanged;
-
-        }
-
-
-        private void OpenMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-
-            dlg.InitialDirectory = "c:\\";
-            dlg.Filter = "C# source files (*.cs)|*.cs|All Files (*.*)|*.*";
-            dlg.RestoreDirectory = true;
-            Nullable<bool> result = dlg.ShowDialog();
-            if (result == true)
-            {
-                LoadTextFile(TextInput, dlg.FileName);
-            }
-        }
-
         private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             if (e.SystemKey == Key.LeftAlt || e.SystemKey == Key.RightAlt)
@@ -111,8 +64,7 @@ namespace Sharped
             Nullable<bool> result = dlg.ShowDialog();
             if (result == true)
             {
-                _filename = dlg.FileName;
-                LoadTextFile(TextInput, _filename);
+                //codeBox.LoadFromFile(dlg.FileName);
             }
         }
 
@@ -123,39 +75,7 @@ namespace Sharped
 
         private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            SaveTextFile(TextInput, _filename);
-        }
-
-        private void LoadTextFile(RichTextBox richTextBox, string filename)
-        {
-            richTextBox.Document.Blocks.Clear(); 
-            using (StreamReader streamReader = File.OpenText(filename))
-            {
-                Paragraph paragraph = new Paragraph(new Run(streamReader.ReadToEnd()));
-                richTextBox.Document.Blocks.Add(paragraph);
-            }
-        }
-
-        private void SaveTextFile(RichTextBox richTextBox, string filename)
-        {
-            if (_filename == "")
-            {
-                // open saveas dialog
-                return;
-            }
-
-            using (StreamWriter streamWriter = new StreamWriter(filename))
-            {
-                string text = GetText(richTextBox);
-                streamWriter.Write(text);
-            }
-        }
-
-        private string GetText(RichTextBox richTextBox)
-        {
-            // use a TextRange to fish out the Text from the Document
-            TextRange textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
-            return textRange.Text;
+            //codeBox.Save();
         }
     }
 }
