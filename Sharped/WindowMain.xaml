@@ -24,7 +24,7 @@
 
             <RichTextBox Grid.Row="1" FontFamily="CournerNew" FontSize="14" 
                      TextChanged="RichTextBox_TextChanged"
-                     ScrollViewer.CanContentScroll="True" 
+                     ScrollViewer.CanContentScroll="True " 
                      ScrollViewer.VerticalScrollBarVisibility="Visible"
                      Name="TextInput">
             <RichTextBox.Resources>
