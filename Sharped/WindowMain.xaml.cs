@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using Microsoft.Win32;
 
 namespace Sharped
 {
@@ -27,12 +28,49 @@ namespace Sharped
 
         private void RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //TODO:
+            if (TextInput.Document == null)
+                return;
+
+            // clear all properties (we are going to color text ourselves)
+            TextRange documentRange = new TextRange(TextInput.Document.ContentStart, TextInput.Document.ContentEnd);
+            documentRange.ClearAllProperties();
+
+            // now let’s create navigator to go though the text and hightlight it
+            TextPointer navigator = TextInput.Document.ContentStart;
+            while (navigator.CompareTo(TextInput.Document.ContentEnd) < 0)
+            {
+                TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
+                if (context == TextPointerContext.ElementStart && navigator.Parent is Run)
+                {
+                    //CheckWordsInRun((Run)navigator.Parent);
+                }
+                navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
+            }
+
+            //color text
+            TextInput.TextChanged -= this.RichTextBox_TextChanged;
+            TextInput.TextChanged += this.RichTextBox_TextChanged;
+
+        }
+
+
+        private void OpenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+
+            dlg.InitialDirectory = "c:\\";
+            dlg.Filter = "C# source files (*.cs)|*.cs|All Files (*.*)|*.*";
+            dlg.RestoreDirectory = true;
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                LoadTextFile(TextInput, dlg.FileName);
+            }
         }
 
         private void LoadTextFile(RichTextBox richTextBox, string filename)
         {
-            richTextBox.Document.Blocks.Clear();
+            richTextBox.Document.Blocks.Clear(); 
             using (StreamReader streamReader = File.OpenText(filename))
             {
                 Paragraph paragraph = new Paragraph(new Run(streamReader.ReadToEnd()));

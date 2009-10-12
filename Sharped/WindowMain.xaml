@@ -9,9 +9,9 @@
         </Grid.RowDefinitions>
         <RichTextBox Grid.Row="0" FontFamily="CournerNew" FontSize="14" 
                      TextChanged="RichTextBox_TextChanged"
-                     ScrollViewer.CanContentScroll="True" 
+                     ScrollViewer.CanContentScroll="True " 
                      ScrollViewer.VerticalScrollBarVisibility="Visible"
-                     Name="rtbCode">
+                     Name="TextInput">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
