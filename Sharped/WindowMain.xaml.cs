@@ -101,6 +101,12 @@ namespace Sharped
 
         private void SaveTextFile(RichTextBox richTextBox, string filename)
         {
+            if (_filename == "")
+            {
+                // open saveas dialog
+                return;
+            }
+
             using (StreamWriter streamWriter = new StreamWriter(filename))
             {
                 string text = GetText(richTextBox);
