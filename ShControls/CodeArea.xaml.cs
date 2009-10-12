@@ -36,6 +36,7 @@ namespace ShControls
             {
                 Text = streamReader.ReadToEnd();
             }
+            HighlightAsNeeded();
         }
 
         public void Save()
@@ -75,25 +76,46 @@ namespace ShControls
             if (codeBox.Document == null)
                 return;
 
-            // clear all properties (we are going to color text ourselves)
-            TextRange documentRange = new TextRange(codeBox.Document.ContentStart, codeBox.Document.ContentEnd);
-            documentRange.ClearAllProperties();
-
-            // now let’s create navigator to go though the text and hightlight it
-            TextPointer navigator = codeBox.Document.ContentStart;
-            while (navigator.CompareTo(codeBox.Document.ContentEnd) < 0)
+            // Paragraph.Tag flags in the document to indicates whether a paragraph needs re-highlighting
+            // NULL (the default) indicates it DOES need highlighting
+            foreach (TextChange C in e.Changes)
             {
-                TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
-                if (context == TextPointerContext.ElementStart && navigator.Parent is Run)
-                {
-                    //CheckWordsInRun((Run)navigator.Parent);
-                }
-                navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
+                TextPointer P = codeBox.Document.ContentStart.GetPositionAtOffset(C.Offset);
+                if (P.Paragraph != null) 
+                    P.Paragraph.Tag = true; //It needs reformatting
             }
 
-            codeBox.TextChanged -= this.codeBox_TextChanged;
-            //color text
-            codeBox.TextChanged += this.codeBox_TextChanged;
+            HighlightAsNeeded();
+        }
+
+        private void HighlightAsNeeded()
+        {
+            if (codeBox.Document.Blocks.Count == 0)
+            {
+                return;
+            }
+
+            Block B = codeBox.Document.Blocks.FirstBlock;
+            while (B != null)
+            {
+                if (B is Paragraph)
+                {
+                    Paragraph P = B as Paragraph;
+                    if (P.Tag == null)
+                    {
+                        Highlight(P);
+                        P.Tag = true; //It has been highlighted
+                    }
+                }
+                else 
+                    throw new Exception("Unknown block type " + B.ToString());
+                B = B.NextBlock;
+            }
+        }
+
+        private void Highlight(Paragraph P)
+        {
+            throw new NotImplementedException();
         }
     }
 }

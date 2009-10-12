@@ -64,7 +64,7 @@ namespace Sharped
             Nullable<bool> result = dlg.ShowDialog(this);
             if (result == true)
             {
-                //codeBox.LoadFromFile(dlg.FileName);
+                codeBox.LoadFromFile(dlg.FileName);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Sharped
 
         private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            //codeBox.Save();
+            codeBox.Save();
         }
     }
 }
