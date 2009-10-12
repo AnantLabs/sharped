@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace Sharped
 {
@@ -27,6 +28,16 @@ namespace Sharped
         private void RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             //TODO:
+        }
+
+        private void LoadTextFile(RichTextBox richTextBox, string filename)
+        {
+            richTextBox.Document.Blocks.Clear();
+            using (StreamReader streamReader = File.OpenText(filename))
+            {
+                Paragraph paragraph = new Paragraph(new Run(streamReader.ReadToEnd()));
+                richTextBox.Document.Blocks.Add(paragraph);
+            }
         }
     }
 }

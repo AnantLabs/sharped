@@ -7,7 +7,24 @@
             <RowDefinition  Height="9*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <RichTextBox Grid.Row="0" FontFamily="CournerNew" FontSize="14" TextChanged="RichTextBox_TextChanged">
+        <RichTextBox Grid.Row="0" FontFamily="CournerNew" FontSize="14" 
+                     TextChanged="RichTextBox_TextChanged"
+                     ScrollViewer.CanContentScroll="True" 
+                     ScrollViewer.VerticalScrollBarVisibility="Visible"
+                     Name="rtbCode">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+            <FlowDocument>
+                <Paragraph>
+                    This is a richTextBox. I can
+                    <Bold>Bold</Bold> ,
+                    <Italic>Italicize</Italic> ,
+                    <Hyperlink>Hyperlink stuff</Hyperlink> right in my document.
+                </Paragraph>
+            </FlowDocument>
         </RichTextBox>
         <TextBox Grid.Row="1" FontFamily="CournerNew" FontSize="14">
         </TextBox>
