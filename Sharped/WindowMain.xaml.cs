@@ -20,6 +20,25 @@ namespace Sharped
     /// </summary>
     public partial class WindowMain : Window
     {
+        /// <summary>
+        /// Indicates whether to show main menu
+        /// </summary>
+        public static readonly DependencyProperty IsMainMenuVisibleProperty;
+        public bool IsMainMenuVisible
+        {
+            get { return (bool)GetValue(IsMainMenuVisibleProperty); }
+            set { SetValue(IsMainMenuVisibleProperty, value); }
+        }
+
+        static WindowMain()
+        {
+            FrameworkPropertyMetadata metadata = new FrameworkPropertyMetadata();
+            metadata.DefaultValue = false;
+
+            IsMainMenuVisibleProperty = DependencyProperty.Register(
+                "IsMainMenuVisible", typeof(bool), typeof(WindowMain), metadata);
+        }
+
         public WindowMain()
         {
             InitializeComponent();
@@ -37,6 +56,14 @@ namespace Sharped
             {
                 Paragraph paragraph = new Paragraph(new Run(streamReader.ReadToEnd()));
                 richTextBox.Document.Blocks.Add(paragraph);
+            }
+        }
+
+        private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.SystemKey == Key.LeftAlt || e.SystemKey == Key.RightAlt)
+            {
+                IsMainMenuVisible = !IsMainMenuVisible;
             }
         }
     }
