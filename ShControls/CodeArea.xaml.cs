@@ -132,5 +132,18 @@ namespace ShControls
                 documentTextRange.Save(fs, DataFormats.Text);
             }
         }
+
+        private void codeBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                // Get the nearest TextPointer to the mouse position.
+                TextPointer location = codeBox.GetPositionFromPoint(Mouse.GetPosition(codeBox), true);
+                // Get the nearest word using this TextPointer.
+                TextRange word = WordBreaker.GetWordRange(location);
+                // Show dialog and rename word.Text documetn wide
+                //word.Text;
+            }
+        }
     }
 }
