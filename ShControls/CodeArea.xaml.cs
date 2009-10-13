@@ -125,15 +125,21 @@ namespace ShControls
                 P.Inlines.LastInline.ElementEnd);
             rangeToHighlight.ClearAllProperties();
 
-            string quotedStr = "\".*?\"";
-            Regex reQuotedString = new Regex(quotedStr, RegexOptions.Multiline);
-            MatchCollection quotedStrings = reQuotedString.Matches(run.Text);
-            foreach (Match m in quotedStrings)
+            foreach (TokenDefinition definition in CsharpSyntaxProvider.Definitions)
             {
-                TextPointer start = run.ElementStart.GetPositionAtOffset(m.Index + 1);
-                TextPointer end = run.ElementStart.GetPositionAtOffset(m.Index + m.Length + 1);
-                TextRange token = new TextRange(start, end);
-                token.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.DarkRed));
+                Regex reToken = new Regex(definition.Regexp, RegexOptions.Multiline);
+                MatchCollection matches = reToken.Matches(run.Text);
+                foreach (Match m in matches)
+                {
+                    TextPointer start = run.ElementStart.GetPositionAtOffset(m.Index + 1);
+                    TextPointer end = run.ElementStart.GetPositionAtOffset(m.Index + m.Length + 1);
+                    TextRange token = new TextRange(start, end);
+
+                    token.ApplyPropertyValue(TextElement.ForegroundProperty,
+                        new SolidColorBrush(definition.ForegroundColor));
+                    token.ApplyPropertyValue(TextElement.FontWeightProperty,
+                        definition.FontWeight);
+                }
             }
         }
 

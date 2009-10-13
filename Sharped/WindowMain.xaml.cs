@@ -17,7 +17,7 @@ using ShControls;
 namespace Sharped
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for WindowMain.xaml
     /// </summary>
     public partial class WindowMain : Window
     {
