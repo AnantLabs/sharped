@@ -81,10 +81,12 @@ namespace ShControls
             {
                 TextPointer P = codeBox.Document.ContentStart.GetPositionAtOffset(C.Offset);
                 if (P.Paragraph != null) 
-                    P.Paragraph.Tag = true; //It needs reformatting
+                    P.Paragraph.Tag = null; //It needs reformatting
             }
 
+            codeBox.TextChanged -= this.codeBox_TextChanged;
             HighlightAsNeeded();
+            codeBox.TextChanged += this.codeBox_TextChanged;
         }
 
         private void HighlightAsNeeded()
@@ -116,8 +118,8 @@ namespace ShControls
         {
             if (P.Inlines.FirstInline == null)
                 return;
-
-            Run run = (Run)P.Inlines.FirstInline;
+            Inline inline = P.Inlines.FirstInline;
+            Run run = (Run)inline;
             (new TextRange(run.ElementStart, run.ElementEnd)).ClearAllProperties();
 
             TextRange rangeToHighlight = new TextRange(run.ContentStart, run.ContentEnd);
