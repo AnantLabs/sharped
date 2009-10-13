@@ -22,12 +22,29 @@ namespace ShControls
 
     class CsharpSyntaxProvider
     {
-        public static TokenDefinition[] Definitions = 
+        internal List<TokenDefinition> Definitions = new List<TokenDefinition>();
+
+        internal CsharpSyntaxProvider()
         {
+            
             // quoted string
-            new TokenDefinition("\".*?\"", FontWeights.Normal, Colors.DarkRed),
+            Definitions.Add(new TokenDefinition("\".*?\"", FontWeights.Normal, Colors.DarkRed));
+            // formal documentation comment
+            Definitions.Add(new TokenDefinition("///.*", FontWeights.Normal, Colors.Gray));
             // comment
-            new TokenDefinition("//.*", FontWeights.Normal, Colors.Green)
-        };
+            Definitions.Add(new TokenDefinition("//.*", FontWeights.Normal, Colors.Green));
+
+            //Regular expression for language-specific syntax
+            //such as keywords, operators, namespaces, classes,
+            //and functions.
+            string[] keywords = { "using", "public", "protected", "private", "string", 
+                "void", "namespace", "internal", "struct", "new", "abstract", "in", 
+                "foreach", "for", "null", "get", "set", "return", "if", "while", "do"
+            };
+            foreach (string keyword in keywords)
+            {
+                Definitions.Add(new TokenDefinition(keyword+"[^:alpha:]", FontWeights.Normal, Colors.Blue) );
+            }
+        }
     }
 }

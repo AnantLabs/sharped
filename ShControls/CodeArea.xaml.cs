@@ -26,6 +26,8 @@ namespace ShControls
         /// </summary>
         string _filename = "";
 
+        CsharpSyntaxProvider _syntaxProvider = new CsharpSyntaxProvider();
+
         public CodeArea()
         {
             InitializeComponent();
@@ -125,7 +127,7 @@ namespace ShControls
                 P.Inlines.LastInline.ElementEnd);
             rangeToHighlight.ClearAllProperties();
 
-            foreach (TokenDefinition definition in CsharpSyntaxProvider.Definitions)
+            foreach (TokenDefinition definition in _syntaxProvider.Definitions)
             {
                 Regex reToken = new Regex(definition.Regexp, RegexOptions.Multiline);
                 MatchCollection matches = reToken.Matches(run.Text);
