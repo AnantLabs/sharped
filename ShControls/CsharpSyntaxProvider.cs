@@ -39,7 +39,8 @@ namespace ShControls
             //and functions.
             string[] keywords = { "using", "public", "protected", "private", "string", 
                 "void", "namespace", "internal", "struct", "new", "abstract", "in", 
-                "foreach", "for", "null", "get", "set", "return", "if", "while", "do"
+                "foreach", "for", "null", "get", "set", "return", "if", "while", "do",
+                "class"
             };
             foreach (string keyword in keywords)
             {
