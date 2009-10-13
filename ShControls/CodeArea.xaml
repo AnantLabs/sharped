@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <Grid>
         <RichTextBox Name="codeBox" TextChanged="codeBox_TextChanged"
-                     FontFamily="CournerNew" FontSize="14" 
+                     FontFamily="CournerNew" FontSize="12" 
                      ScrollViewer.CanContentScroll="True " 
                      ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDown="codeBox_MouseDown">
             <RichTextBox.Resources>
