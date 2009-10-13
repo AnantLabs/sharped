@@ -120,9 +120,11 @@ namespace ShControls
                 return;
             Inline inline = P.Inlines.FirstInline;
             Run run = (Run)inline;
-            (new TextRange(run.ElementStart, run.ElementEnd)).ClearAllProperties();
 
-            TextRange rangeToHighlight = new TextRange(run.ContentStart, run.ContentEnd);
+            TextRange rangeToHighlight = new TextRange(P.Inlines.FirstInline.ElementStart,
+                P.Inlines.LastInline.ElementEnd);
+            rangeToHighlight.ClearAllProperties();
+
             string quotedStr = "\".*?\"";
             Regex reQuotedString = new Regex(quotedStr, RegexOptions.Multiline);
             MatchCollection quotedStrings = reQuotedString.Matches(run.Text);
