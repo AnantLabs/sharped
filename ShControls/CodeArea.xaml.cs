@@ -32,9 +32,11 @@ namespace ShControls
 
         public void LoadFromFile(string filename)
         {
-            using (StreamReader streamReader = File.OpenText(filename))
+            TextRange documentTextRange = new TextRange( codeBox.Document.ContentStart, 
+                codeBox.Document.ContentEnd);
+            using (FileStream fs = File.Open(filename, FileMode.Open))
             {
-                Text = streamReader.ReadToEnd();
+                documentTextRange.Load(fs, DataFormats.Text);
             }
             HighlightAsNeeded();
         }
@@ -46,10 +48,11 @@ namespace ShControls
                 // open saveas dialog
                 return;
             }
-
-            using (StreamWriter streamWriter = new StreamWriter(_filename))
+            TextRange documentTextRange = new TextRange(codeBox.Document.ContentStart,
+                codeBox.Document.ContentEnd);
+            using (FileStream fs = File.Create(_filename))
             {
-                streamWriter.Write(Text);
+                documentTextRange.Save(fs, DataFormats.Text);
             }
         }
 
@@ -115,7 +118,9 @@ namespace ShControls
 
         private void Highlight(Paragraph P)
         {
-            throw new NotImplementedException();
+            Run run = (Run)P.Inlines.FirstInline;
+            TextRange rangeToHighlight = new TextRange(run.ContentStart, run.ContentEnd);
+            //throw new NotImplementedException();
         }
     }
 }
