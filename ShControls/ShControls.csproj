@@ -59,6 +59,7 @@
     <Compile Include="CodeArea.xaml.cs">
       <DependentUpon>CodeArea.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CsharpSyntaxProvider.cs" />
     <Compile Include="FileDialog.cs" />
     <Compile Include="OpenFileDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
