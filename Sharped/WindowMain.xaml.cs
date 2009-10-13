@@ -93,7 +93,7 @@ namespace Sharped
             Nullable<bool> result = dlg.ShowDialog(this);
             if (result == true)
             {
-                codeBox.LoadFromFile(dlg.FileName);
+                codeBox.SaveToFile(dlg.FileName);
             }
         }
     }

@@ -7,7 +7,7 @@
         <RichTextBox Name="codeBox" TextChanged="codeBox_TextChanged"
                      FontFamily="CournerNew" FontSize="14" 
                      ScrollViewer.CanContentScroll="True " 
-                     ScrollViewer.VerticalScrollBarVisibility="Visible">
+                     ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDown="codeBox_MouseDown">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
