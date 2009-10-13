@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ShControls
 {
@@ -113,14 +114,28 @@ namespace ShControls
 
         private void Highlight(Paragraph P)
         {
+            if (P.Inlines.FirstInline == null)
+                return;
+
             Run run = (Run)P.Inlines.FirstInline;
+            (new TextRange(run.ElementStart, run.ElementEnd)).ClearAllProperties();
+
             TextRange rangeToHighlight = new TextRange(run.ContentStart, run.ContentEnd);
-            //throw new NotImplementedException();
+            string quotedStr = "\".*?\"";
+            Regex reQuotedString = new Regex(quotedStr, RegexOptions.Multiline);
+            MatchCollection quotedStrings = reQuotedString.Matches(run.Text);
+            foreach (Match m in quotedStrings)
+            {
+                TextPointer start = run.ElementStart.GetPositionAtOffset(m.Index + 1);
+                TextPointer end = run.ElementStart.GetPositionAtOffset(m.Index + m.Length + 1);
+                TextRange token = new TextRange(start, end);
+                token.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.DarkRed));
+            }
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            codeBox.Document.Blocks.Clear();
         }
 
         public void SaveToFile(string filename)
