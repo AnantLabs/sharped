@@ -16,8 +16,10 @@
             Converter={StaticResource BooleanToVisibilityConverter}}"
             -->
             <MenuItem Header="_File">
-                <MenuItem Header="_Open"  ToolTip="Open a file" Click="OpenMenuItem_Click"/>
+                <MenuItem Header="_New"  ToolTip="Creat new file" Click="NewMenuItem_Click"/>
+                <MenuItem Header="_Open..."  ToolTip="Open a file" Click="OpenMenuItem_Click"/>
                 <MenuItem Header="_Save"  ToolTip="Save file" Click="SaveMenuItem_Click"/>
+                <MenuItem Header="_Save As..."  ToolTip="Save file as" Click="SaveAsMenuItem_Click"/>
                 <Separator/>
                 <MenuItem Header="_Exit" ToolTip="Close application" Click="ExitMenuItem_Click"/>
             </MenuItem>
