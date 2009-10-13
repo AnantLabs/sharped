@@ -77,5 +77,24 @@ namespace Sharped
         {
             codeBox.Save();
         }
+
+        private void NewMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            codeBox.Clear();
+        }
+
+        private void SaveAsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+
+            dlg.InitialDirectory = "c:\\";
+            dlg.Filter = "C# source files (*.cs)|*.cs|All Files (*.*)|*.*";
+            dlg.RestoreDirectory = true;
+            Nullable<bool> result = dlg.ShowDialog(this);
+            if (result == true)
+            {
+                codeBox.LoadFromFile(dlg.FileName);
+            }
+        }
     }
 }

@@ -48,12 +48,7 @@ namespace ShControls
                 // open saveas dialog
                 return;
             }
-            TextRange documentTextRange = new TextRange(codeBox.Document.ContentStart,
-                codeBox.Document.ContentEnd);
-            using (FileStream fs = File.Create(_filename))
-            {
-                documentTextRange.Save(fs, DataFormats.Text);
-            }
+            SaveToFile(_filename);
         }
 
         public string Text
@@ -121,6 +116,21 @@ namespace ShControls
             Run run = (Run)P.Inlines.FirstInline;
             TextRange rangeToHighlight = new TextRange(run.ContentStart, run.ContentEnd);
             //throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveToFile(string filename)
+        {
+            TextRange documentTextRange = new TextRange(codeBox.Document.ContentStart,
+                codeBox.Document.ContentEnd);
+            using (FileStream fs = File.Create(filename))
+            {
+                documentTextRange.Save(fs, DataFormats.Text);
+            }
         }
     }
 }
