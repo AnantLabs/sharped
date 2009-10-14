@@ -96,5 +96,10 @@ namespace Sharped
                 codeBox.SaveToFile(dlg.FileName);
             }
         }
+
+        private void ReplaceItem_Click(object sender, RoutedEventArgs e)
+        {
+            codeBox.ShowReplacePanel();
+        }
     }
 }
