@@ -5,7 +5,7 @@
     Title="Sharped" Height="353" Width="639" PreviewKeyUp="Window_PreviewKeyUp">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition  Height="1*"></RowDefinition>
+            <RowDefinition  Height="20"></RowDefinition>
             <RowDefinition  Height="9*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -16,12 +16,15 @@
             Converter={StaticResource BooleanToVisibilityConverter}}"
             -->
             <MenuItem Header="_File">
-                <MenuItem Header="_New"  ToolTip="Creat new file" Click="NewMenuItem_Click"/>
+                <MenuItem Header="_New"  ToolTip="Create new file" Click="NewMenuItem_Click"/>
                 <MenuItem Header="_Open..."  ToolTip="Open a file" Click="OpenMenuItem_Click"/>
                 <MenuItem Header="_Save"  ToolTip="Save file" Click="SaveMenuItem_Click"/>
                 <MenuItem Header="_Save As..."  ToolTip="Save file as" Click="SaveAsMenuItem_Click"/>
                 <Separator/>
                 <MenuItem Header="_Exit" ToolTip="Close application" Click="ExitMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Find/Replace..."  ToolTip="Find item" Click="ReplaceItem_Click"/>
             </MenuItem>
         </Menu>
         <custom:CodeArea Grid.Row="1" Name="codeBox">

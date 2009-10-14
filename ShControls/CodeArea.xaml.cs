@@ -168,9 +168,13 @@ namespace ShControls
                 TextPointer location = codeBox.GetPositionFromPoint(Mouse.GetPosition(codeBox), true);
                 // Get the nearest word using this TextPointer.
                 TextRange word = WordBreaker.GetWordRange(location);
-                // Show dialog and rename word.Text documetn wide
-                //word.Text;
+                // Show dialog and rename word.Text document wide
             }
+        }
+
+        public void ShowReplacePanel()
+        {
+            throw new NotImplementedException();
         }
     }
 }
