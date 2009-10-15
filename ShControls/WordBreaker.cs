@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Documents;
+﻿using System.Windows.Documents;
 
 namespace ShControls
 {
@@ -34,7 +29,8 @@ namespace ShControls
             if (wordEndPosition != null)
             {
                 // Then travel backwards, to find word start position.
-                wordStartPosition = GetPositionAtWordBoundary(wordEndPosition, /*wordBreakDirection*/LogicalDirection.Backward);
+                wordStartPosition = GetPositionAtWordBoundary(wordEndPosition, /*wordBreakDirection*/
+                                                              LogicalDirection.Backward);
             }
 
             if (wordStartPosition != null && wordEndPosition != null)
@@ -82,11 +78,13 @@ namespace ShControls
 
             if (position.GetPointerContext(wordBreakDirection) == TextPointerContext.Text)
             {
-                LogicalDirection oppositeDirection = (wordBreakDirection == LogicalDirection.Forward) ?
-                    LogicalDirection.Backward : LogicalDirection.Forward;
+                LogicalDirection oppositeDirection = (wordBreakDirection == LogicalDirection.Forward)
+                                                         ?
+                                                             LogicalDirection.Backward
+                                                         : LogicalDirection.Forward;
 
-                char[] runBuffer = new char[1];
-                char[] oppositeRunBuffer = new char[1];
+                var runBuffer = new char[1];
+                var oppositeRunBuffer = new char[1];
 
                 position.GetTextInRun(wordBreakDirection, runBuffer, /*startIndex*/0, /*count*/1);
                 position.GetTextInRun(oppositeDirection, oppositeRunBuffer, /*startIndex*/0, /*count*/1);
