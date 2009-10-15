@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 
 namespace ShControls
 {
@@ -15,11 +12,8 @@ namespace ShControls
                 FromOfn(ofn);
                 return true;
             }
-            else
-            {
-                FreeOfn(ofn);
-                return false;
-            }
+            FreeOfn(ofn);
+            return false;
         }
     }
 }

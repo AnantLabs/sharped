@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
 using ShControls;
 
 namespace Sharped
@@ -25,24 +14,25 @@ namespace Sharped
         /// Indicates whether to show main menu
         /// </summary>
         public static readonly DependencyProperty IsMainMenuVisibleProperty;
-        public bool IsMainMenuVisible
-        {
-            get { return (bool)GetValue(IsMainMenuVisibleProperty); }
-            set { SetValue(IsMainMenuVisibleProperty, value); }
-        }
 
         static WindowMain()
         {
-            FrameworkPropertyMetadata metadata = new FrameworkPropertyMetadata();
+            var metadata = new FrameworkPropertyMetadata();
             metadata.DefaultValue = false;
 
             IsMainMenuVisibleProperty = DependencyProperty.Register(
-                "IsMainMenuVisible", typeof(bool), typeof(WindowMain), metadata);
+                "IsMainMenuVisible", typeof (bool), typeof (WindowMain), metadata);
         }
 
         public WindowMain()
         {
             InitializeComponent();
+        }
+
+        public bool IsMainMenuVisible
+        {
+            get { return (bool) GetValue(IsMainMenuVisibleProperty); }
+            set { SetValue(IsMainMenuVisibleProperty, value); }
         }
 
         private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
@@ -56,7 +46,7 @@ namespace Sharped
 
         private void OpenMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
+            var dlg = new OpenFileDialog();
 
             dlg.InitialDirectory = "c:\\";
             dlg.Filter = "C# source files (*.cs)|*.cs|All Files (*.*)|*.*";
@@ -70,7 +60,7 @@ namespace Sharped
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
@@ -85,7 +75,7 @@ namespace Sharped
 
         private void SaveAsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog();
+            var dlg = new SaveFileDialog();
 
             dlg.InitialDirectory = "c:\\";
             dlg.Filter = "C# source files (*.cs)|*.cs|All Files (*.*)|*.*";
