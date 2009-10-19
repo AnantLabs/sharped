@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Collections.Generic;
 
 namespace ShControls
 {
@@ -120,21 +121,47 @@ namespace ShControls
                                                  P.Inlines.LastInline.ElementEnd);
             rangeToHighlight.ClearAllProperties();
 
+            foreach (TokenDefinition comment in _syntaxProvider.Comments)
+            {
+                var reToken = new Regex(comment.Regexp, RegexOptions.Multiline);
+                MatchCollection matches = reToken.Matches(rangeToHighlight.Text);
+                foreach (Match m in matches)
+                {
+                    int startIndex = m.Groups[1].Index; // highlight first groupn in ()
+                    int endIndex = m.Groups[1].Index + m.Groups[1].Length;
+                    TextPointer start = rangeToHighlight.Start.GetPositionAtOffset(startIndex);
+                    TextPointer end = rangeToHighlight.Start.GetPositionAtOffset(endIndex);
+                    var tokenRange = new TextRange(start, end);
+                    tokenRange.ApplyPropertyValue(TextElement.ForegroundProperty,
+                                         new SolidColorBrush(comment.ForegroundColor));
+                    tokenRange.ApplyPropertyValue(TextElement.FontWeightProperty,
+                                                 comment.FontWeight);
+                }
+                if (matches.Count > 0)
+                    return;
+            }
+
+            // since highlighting brokes offset pointing, store ranges
+            List<Token> tokens = new List<Token>();
             foreach (TokenDefinition definition in _syntaxProvider.Definitions)
             {
                 var reToken = new Regex(definition.Regexp, RegexOptions.Multiline);
-                MatchCollection matches = reToken.Matches(run.Text);
+                MatchCollection matches = reToken.Matches(rangeToHighlight.Text);
                 foreach (Match m in matches)
                 {
-                    TextPointer start = run.ElementStart.GetPositionAtOffset(m.Index + 1);
-                    TextPointer end = run.ElementStart.GetPositionAtOffset(m.Index + m.Length + 1);
-                    var token = new TextRange(start, end);
-
-                    token.ApplyPropertyValue(TextElement.ForegroundProperty,
-                                             new SolidColorBrush(definition.ForegroundColor));
-                    token.ApplyPropertyValue(TextElement.FontWeightProperty,
-                                             definition.FontWeight);
+                    int startIndex = m.Groups[1].Index; // highlight first groupn in ()
+                    int endIndex = m.Groups[1].Index + m.Groups[1].Length;
+                    TextPointer start = rangeToHighlight.Start.GetPositionAtOffset(startIndex);
+                    TextPointer end = rangeToHighlight.Start.GetPositionAtOffset(endIndex);
+                    var tokenRange = new TextRange(start, end);
+                    tokens.Add(new Token(definition, tokenRange));
                 }
+            }
+
+            // do actual highlighting work
+            foreach (var token in tokens)
+            {
+                token.Highlight();
             }
         }
 
