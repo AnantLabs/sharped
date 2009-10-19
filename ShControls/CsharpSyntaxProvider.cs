@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Documents;
 
 namespace ShControls
 {
@@ -18,18 +19,37 @@ namespace ShControls
         }
     }
 
+    internal struct Token
+    {
+        private TokenDefinition _definition;
+        private TextRange _tokenRange;
+        public Token(TokenDefinition d, TextRange range)
+        {
+            _definition = d;
+            _tokenRange = range;
+        }
+        public void Highlight()
+        {
+            _tokenRange.ApplyPropertyValue(TextElement.ForegroundProperty,
+                                         new SolidColorBrush(_definition.ForegroundColor));
+            _tokenRange.ApplyPropertyValue(TextElement.FontWeightProperty,
+                                         _definition.FontWeight);
+        }
+    }
+
     internal class CsharpSyntaxProvider
     {
         internal List<TokenDefinition> Definitions = new List<TokenDefinition>();
+        internal List<TokenDefinition> Comments = new List<TokenDefinition>();
 
         internal CsharpSyntaxProvider()
         {
             // quoted string
-            Definitions.Add(new TokenDefinition("\".*?\"", FontWeights.Normal, Colors.DarkRed));
+            Comments.Add(new TokenDefinition("(\".*?\")", FontWeights.Normal, Colors.DarkRed));
             // formal documentation comment
-            Definitions.Add(new TokenDefinition("///.*", FontWeights.Normal, Colors.Gray));
+            Comments.Add(new TokenDefinition("(///.*)", FontWeights.Normal, Colors.Gray));
             // comment
-            Definitions.Add(new TokenDefinition("//.*", FontWeights.Normal, Colors.Green));
+            Comments.Add(new TokenDefinition("(//.*)", FontWeights.Normal, Colors.Green));
 
             //Regular expression for language-specific syntax
             //such as keywords, operators, namespaces, classes,
@@ -38,11 +58,16 @@ namespace ShControls
                                     "using", "public", "protected", "private", "string",
                                     "void", "namespace", "internal", "struct", "new", "abstract", "in",
                                     "foreach", "for", "null", "get", "set", "return", "if", "while", "do",
-                                    "class"
+                                    "class", "var", "static", "readonly", "true", "false", "partial",
+                                    "typeof", "int", "bool", "byte"
                                 };
             foreach (string keyword in keywords)
             {
-                Definitions.Add(new TokenDefinition(keyword + "[^:alpha:]", FontWeights.Normal, Colors.Blue));
+                Definitions.Add(
+                    new TokenDefinition(
+                        string.Format("[^A-Za-z]+({0})[^A-Za-z]", keyword), 
+                        FontWeights.Normal, Colors.Blue)
+                        );
             }
         }
     }
