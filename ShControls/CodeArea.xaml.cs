@@ -145,12 +145,12 @@ namespace ShControls
             List<Token> tokens = new List<Token>();
             foreach (TokenDefinition definition in _syntaxProvider.Definitions)
             {
-                var reToken = new Regex(definition.Regexp, RegexOptions.Multiline);
+                var reToken = new Regex(definition.Regexp);
                 MatchCollection matches = reToken.Matches(rangeToHighlight.Text);
                 foreach (Match m in matches)
                 {
-                    int startIndex = m.Groups[1].Index; // highlight first groupn in ()
-                    int endIndex = m.Groups[1].Index + m.Groups[1].Length;
+                    int startIndex = m.Groups[_syntaxProvider.HIGHLIGHT_GROUP_INDEX].Index; // highlight first groupn in ()
+                    int endIndex = startIndex + m.Groups[_syntaxProvider.HIGHLIGHT_GROUP_INDEX].Length;
                     TextPointer start = rangeToHighlight.Start.GetPositionAtOffset(startIndex);
                     TextPointer end = rangeToHighlight.Start.GetPositionAtOffset(endIndex);
                     var tokenRange = new TextRange(start, end);

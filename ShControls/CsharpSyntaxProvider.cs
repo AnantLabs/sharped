@@ -59,16 +59,18 @@ namespace ShControls
                                     "void", "namespace", "internal", "struct", "new", "abstract", "in",
                                     "foreach", "for", "null", "get", "set", "return", "if", "while", "do",
                                     "class", "var", "static", "readonly", "true", "false", "partial",
-                                    "typeof", "int", "bool", "byte"
+                                    "typeof", "int", "bool", "byte", "value", "object"
                                 };
             foreach (string keyword in keywords)
             {
                 Definitions.Add(
                     new TokenDefinition(
-                        string.Format("[^A-Za-z]+({0})[^A-Za-z]", keyword), 
+                        string.Format("(^|[^A-Za-z])({0})([^A-Za-z]|$)", keyword), 
                         FontWeights.Normal, Colors.Blue)
                         );
             }
         }
+
+        public int HIGHLIGHT_GROUP_INDEX = 2;
     }
 }
