@@ -6,8 +6,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition  Height="20"></RowDefinition>
-            <RowDefinition  Height="9*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition  Height="8*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu Name="mainMenu" HorizontalAlignment="Left" VerticalAlignment="Top" > 
             <!--
@@ -26,10 +26,16 @@
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Find/Replace..."  ToolTip="Find item" Click="ReplaceItem_Click"/>
             </MenuItem>
+            <MenuItem Header="_Build">
+                <MenuItem Header="_Compile"  ToolTip="Compile program"
+                          Click="Complile_Click"/>
+                <MenuItem Header="_Run"  ToolTip="Run program"
+                          Click="Run_Click"/>
+            </MenuItem>
         </Menu>
         <custom:CodeArea Grid.Row="1" Name="codeBox">
         </custom:CodeArea>
-        <TextBox Grid.Row="2" FontFamily="CournerNew" FontSize="14">
+        <TextBox Grid.Row="2" FontFamily="CournerNew" FontSize="10" Name="tbOutput" TextWrapping="Wrap">
         </TextBox>
     </Grid>
 </Window>

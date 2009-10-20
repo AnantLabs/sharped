@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Input;
 using ShControls;
+using System.Diagnostics;
+using System.IO;
 
 namespace Sharped
 {
@@ -90,6 +92,45 @@ namespace Sharped
         private void ReplaceItem_Click(object sender, RoutedEventArgs e)
         {
             codeBox.ShowReplacePanel();
+        }
+
+        private void Complile_Click(object sender, RoutedEventArgs e)
+        {
+            Process compiler = new Process();
+            compiler.StartInfo.CreateNoWindow = true;
+            compiler.StartInfo.FileName = "C:\\Windows\\Microsoft.NET\\Framework\\v3.5\\Csc.exe";
+            compiler.StartInfo.Arguments = 
+                String.Format("/r:System.dll /out:\"{0}.exe\" \"{1}\"",
+                Path.GetFileName(codeBox.Filename), codeBox.Filename
+            );
+            compiler.StartInfo.UseShellExecute = false;
+            compiler.StartInfo.RedirectStandardOutput = true;
+            compiler.Start();
+
+            tbOutput.Text = string.Format(
+                "{0} {1}\r\n", 
+                compiler.StartInfo.FileName, 
+                compiler.StartInfo.Arguments
+                );
+            tbOutput.Text += compiler.StandardOutput.ReadToEnd();
+
+            compiler.WaitForExit();
+            tbOutput.ScrollToEnd();
+
+        }
+
+        private void Run_Click(object sender, RoutedEventArgs e)
+        {
+            Process program = new Process();
+            program.StartInfo.CreateNoWindow = true;
+            program.StartInfo.FileName = String.Format("{0}.exe", Path.GetFileName(codeBox.Filename));
+            program.StartInfo.UseShellExecute = false;
+            program.StartInfo.RedirectStandardOutput = true;
+            program.Start();
+
+            tbOutput.Text += program.StandardOutput.ReadToEnd();
+
+            program.WaitForExit();
         }
     }
 }

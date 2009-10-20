@@ -44,6 +44,14 @@ namespace ShControls
             }
         }
 
+        /// <summary>
+        /// file loaded in editor
+        /// </summary>
+        public string Filename
+        {
+            get { return _filename; }
+        }
+
         public void LoadFromFile(string filename)
         {
             var documentTextRange = new TextRange(codeBox.Document.ContentStart,
@@ -53,16 +61,17 @@ namespace ShControls
                 documentTextRange.Load(fs, DataFormats.Text);
             }
             HighlightAsNeeded();
+            _filename = filename;
         }
 
         public void Save()
         {
-            if (_filename == "")
+            if (Filename == "")
             {
                 // open saveas dialog
                 return;
             }
-            SaveToFile(_filename);
+            SaveToFile(Filename);
         }
 
 
@@ -178,6 +187,7 @@ namespace ShControls
             {
                 documentTextRange.Save(fs, DataFormats.Text);
             }
+            _filename = filename;
         }
 
         private void codeBox_MouseDown(object sender, MouseButtonEventArgs e)
