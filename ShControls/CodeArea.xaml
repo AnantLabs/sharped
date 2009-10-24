@@ -4,14 +4,65 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <DockPanel>
+        <DockPanel.Resources>
+            <Style x:Key="ShadowStyle">
+                <Setter Property="Control.Foreground" Value="LightGray" />
+            </Style>
+            <Style x:Key="RedCloseButton" TargetType="Button">
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="FontFamily" Value="Verdana"/>
+                <Setter Property="FontSize" Value="11px"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="border" BorderThickness="1" Padding="4,2" BorderBrush="DarkGray" CornerRadius="3" Background="{TemplateBinding Background}">
+                                <Grid >
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="contentShadow" Style="{StaticResource ShadowStyle}">
+                                        <ContentPresenter.RenderTransform>
+                                            <TranslateTransform X="1.0" Y="1.0" />
+                                        </ContentPresenter.RenderTransform>
+                                    </ContentPresenter>
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="content"/>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#FF4788c8" />
+                                    <Setter Property="Foreground" Value="#FF4788c8" />
+                                    <Setter Property="Background" >
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                                <GradientStop Color="#FFFFD190" Offset="0.35"/>
+                                                <GradientStop Color="Red" Offset="0.95"/>
+                                                <GradientStop Color="#FFFFD190" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="content" Property="RenderTransform" >
+                                        <Setter.Value>
+                                            <TranslateTransform Y="1.0" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </DockPanel.Resources>
         <StackPanel Name="SearchPanel" Orientation="Horizontal" Visibility="Collapsed" 
                     DockPanel.Dock="Bottom">
+            <Button Name="closeButton" Content="X" Style="{StaticResource RedCloseButton}"
+                    Click="SwitchSearchPanelVisibility" Width="20" Height="20" Margin="5" />
             <Label>Find:</Label>
-            <TextBox>type here</TextBox>
-            <Button>Next</Button>
-            <Button>Previous</Button>
+            <TextBox Name="textToSearch" Width="150" >type here</TextBox>
+            <Button Margin="1">Next</Button>
+            <Button Margin="1">Previous</Button>
             <CheckBox VerticalAlignment="Center">Match case</CheckBox>
-            <Button Name="closeButton" HorizontalAlignment="Right" Click="HideSearchPanel">X</Button>
         </StackPanel>
         <RichTextBox Name="codeBox" TextChanged="codeBox_TextChanged"
                      FontFamily="CournerNew" FontSize="12" 
