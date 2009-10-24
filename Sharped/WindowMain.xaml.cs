@@ -45,8 +45,7 @@ namespace Sharped
             }
         }
 
-
-        private void OpenMenuItem_Click(object sender, RoutedEventArgs e)
+        private void OpenExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var dlg = new OpenFileDialog();
 
@@ -60,22 +59,12 @@ namespace Sharped
             }
         }
 
-        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
+        private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             codeBox.Save();
         }
 
-        private void NewMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            codeBox.Clear();
-        }
-
-        private void SaveAsMenuItem_Click(object sender, RoutedEventArgs e)
+        private void SaveAsExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var dlg = new SaveFileDialog();
 
@@ -89,17 +78,27 @@ namespace Sharped
             }
         }
 
-        private void ReplaceItem_Click(object sender, RoutedEventArgs e)
+        private void NewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            codeBox.ShowReplacePanel();
+            codeBox.Clear();
         }
 
-        private void Complile_Click(object sender, RoutedEventArgs e)
+        private void SaveCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = codeBox.Filename != "";
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void CompileExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             Process compiler = new Process();
             compiler.StartInfo.CreateNoWindow = true;
             compiler.StartInfo.FileName = "C:\\Windows\\Microsoft.NET\\Framework\\v3.5\\Csc.exe";
-            compiler.StartInfo.Arguments = 
+            compiler.StartInfo.Arguments =
                 String.Format("/r:System.dll /out:\"{0}.exe\" \"{1}\"",
                 Path.GetFileName(codeBox.Filename), codeBox.Filename
             );
@@ -108,18 +107,17 @@ namespace Sharped
             compiler.Start();
 
             tbOutput.Text = string.Format(
-                "{0} {1}\r\n", 
-                compiler.StartInfo.FileName, 
+                "{0} {1}\r\n",
+                compiler.StartInfo.FileName,
                 compiler.StartInfo.Arguments
                 );
             tbOutput.Text += compiler.StandardOutput.ReadToEnd();
 
             compiler.WaitForExit();
             tbOutput.ScrollToEnd();
-
         }
 
-        private void Run_Click(object sender, RoutedEventArgs e)
+        private void RunExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             Process program = new Process();
             program.StartInfo.CreateNoWindow = true;
@@ -132,5 +130,26 @@ namespace Sharped
 
             program.WaitForExit();
         }
+
+        private void SearchExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            codeBox.ShowSearchPanel();
+        }
+    }
+
+    public static class CompilerCommand
+    {
+        public static InputGestureCollection compileGestureCollection = new InputGestureCollection()
+        {
+            new KeyGesture(Key.F7)
+        };
+        public static InputGestureCollection runGestureCollection = new InputGestureCollection()
+        {
+            new KeyGesture(Key.F5, ModifierKeys.Control)
+        };
+        public static readonly RoutedUICommand Compile =
+            new RoutedUICommand("Compile", "Compile", typeof(WindowMain), compileGestureCollection);
+        public static readonly RoutedUICommand Run =
+            new RoutedUICommand("Run compiled application", "Run", typeof(WindowMain), runGestureCollection);
     }
 }

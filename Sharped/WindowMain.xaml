@@ -2,7 +2,21 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:custom="clr-namespace:ShControls;assembly=ShControls"
+    xmlns:Sharped="clr-namespace:Sharped"
     Title="Sharped" Height="353" Width="639" PreviewKeyUp="Window_PreviewKeyUp">
+    <Window.CommandBindings>
+        <CommandBinding Command="New" Executed="NewExecuted" />
+        <CommandBinding Command="Open" Executed="OpenExecuted" />
+        <CommandBinding Command="Save" Executed="SaveExecuted" CanExecute="SaveCanExecute"/>
+        <CommandBinding Command="Search" Executed="SearchExecuted" />
+        <CommandBinding Command="SaveAs" Executed="SaveAsExecuted" />
+        <CommandBinding Command="Sharped:CompilerCommand.Compile" Executed="CompileExecuted" />
+        <CommandBinding Command="Sharped:CompilerCommand.Run" Executed="RunExecuted" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition  Height="20"></RowDefinition>
@@ -16,21 +30,19 @@
             Converter={StaticResource BooleanToVisibilityConverter}}"
             -->
             <MenuItem Header="_File">
-                <MenuItem Header="_New"  ToolTip="Create new file" Click="NewMenuItem_Click"/>
-                <MenuItem Header="_Open..."  ToolTip="Open a file" Click="OpenMenuItem_Click"/>
-                <MenuItem Header="_Save"  ToolTip="Save file" Click="SaveMenuItem_Click"/>
-                <MenuItem Header="_Save As..."  ToolTip="Save file as" Click="SaveAsMenuItem_Click"/>
+                <MenuItem Header="_New"  ToolTip="Create new file" Command="New" />
+                <MenuItem Header="_Open..."  ToolTip="Open a file" Command="Open" />
+                <MenuItem Header="_Save"  ToolTip="Save file" Command="Save" />
+                <MenuItem Header="Save _As..."  ToolTip="Save file as" Command="SaveAs" />
                 <Separator/>
-                <MenuItem Header="_Exit" ToolTip="Close application" Click="ExitMenuItem_Click"/>
+                <MenuItem Header="_Exit" ToolTip="Close application" Click="Exit_Click"/>
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Find/Replace..."  ToolTip="Find item" Click="ReplaceItem_Click"/>
+                <MenuItem Header="_Find..."  ToolTip="Find item" Command="Search"/>
             </MenuItem>
             <MenuItem Header="_Build">
-                <MenuItem Header="_Compile"  ToolTip="Compile program"
-                          Click="Complile_Click"/>
-                <MenuItem Header="_Run"  ToolTip="Run program"
-                          Click="Run_Click"/>
+                <MenuItem Header="_Compile"  ToolTip="Compile program" Command="Sharped:CompilerCommand.Compile"/>
+                <MenuItem Header="_Run"  ToolTip="Run program" Command="Sharped:CompilerCommand.Run"/>
             </MenuItem>
         </Menu>
         <custom:CodeArea Grid.Row="1" Name="codeBox">
