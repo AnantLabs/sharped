@@ -133,7 +133,7 @@ namespace Sharped
 
         private void SearchExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            codeBox.ShowSearchPanel();
+            codeBox.SwitchSearchPanelVisibility();
         }
     }
 

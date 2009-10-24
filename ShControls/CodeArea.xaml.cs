@@ -202,14 +202,21 @@ namespace ShControls
             }
         }
 
-        public void ShowSearchPanel()
+        public void SwitchSearchPanelVisibility()
         {
-            SearchPanel.Visibility = Visibility.Visible;
+            SwitchSearchPanelVisibility(this, new RoutedEventArgs());
         }
 
-        private void HideSearchPanel(object sender, RoutedEventArgs e)
+        private void SwitchSearchPanelVisibility(object sender, RoutedEventArgs e)
         {
-            SearchPanel.Visibility = Visibility.Collapsed;
+            if (SearchPanel.Visibility == Visibility.Collapsed)
+            {
+                SearchPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SearchPanel.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
