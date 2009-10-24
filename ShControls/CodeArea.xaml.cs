@@ -202,9 +202,14 @@ namespace ShControls
             }
         }
 
-        public void ShowReplacePanel()
+        public void ShowSearchPanel()
         {
-            throw new NotImplementedException();
+            SearchPanel.Visibility = Visibility.Visible;
+        }
+
+        private void HideSearchPanel(object sender, RoutedEventArgs e)
+        {
+            SearchPanel.Visibility = Visibility.Collapsed;
         }
     }
 }

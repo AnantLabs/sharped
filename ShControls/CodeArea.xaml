@@ -3,7 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
-    <Grid>
+    <DockPanel>
+        <StackPanel Name="SearchPanel" Orientation="Horizontal" Visibility="Collapsed" 
+                    DockPanel.Dock="Bottom">
+            <Label>Find:</Label>
+            <TextBox>type here</TextBox>
+            <Button>Next</Button>
+            <Button>Previous</Button>
+            <CheckBox VerticalAlignment="Center">Match case</CheckBox>
+            <Button Name="closeButton" HorizontalAlignment="Right" Click="HideSearchPanel">X</Button>
+        </StackPanel>
         <RichTextBox Name="codeBox" TextChanged="codeBox_TextChanged"
                      FontFamily="CournerNew" FontSize="12" 
                      ScrollViewer.CanContentScroll="True " 
@@ -19,5 +28,5 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-    </Grid>
+    </DockPanel>
 </UserControl>
