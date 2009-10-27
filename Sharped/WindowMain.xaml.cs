@@ -135,6 +135,13 @@ namespace Sharped
         {
             codeBox.SwitchSearchPanelVisibility();
         }
+
+        private void RunCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = File.Exists(
+                String.Format("{0}.exe", Path.GetFileName(codeBox.Filename))
+                );
+        }
     }
 
     public static class CompilerCommand

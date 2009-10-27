@@ -10,8 +10,8 @@
         <CommandBinding Command="Save" Executed="SaveExecuted" CanExecute="SaveCanExecute"/>
         <CommandBinding Command="Search" Executed="SearchExecuted" />
         <CommandBinding Command="SaveAs" Executed="SaveAsExecuted" />
-        <CommandBinding Command="Sharped:CompilerCommand.Compile" Executed="CompileExecuted" />
-        <CommandBinding Command="Sharped:CompilerCommand.Run" Executed="RunExecuted" />
+        <CommandBinding Command="Sharped:CompilerCommand.Compile" Executed="CompileExecuted" CanExecute="SaveCanExecute"/>
+        <CommandBinding Command="Sharped:CompilerCommand.Run" Executed="RunExecuted" CanExecute="RunCanExecute"/>
     </Window.CommandBindings>
 
     <Window.InputBindings>
