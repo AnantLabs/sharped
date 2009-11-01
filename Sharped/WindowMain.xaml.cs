@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using Sharped.Controls;
 using ShControls;
 using System.Diagnostics;
 using System.IO;
@@ -142,6 +143,12 @@ namespace Sharped
                 String.Format("{0}.exe", Path.GetFileName(codeBox.Filename))
                 );
         }
+
+        private void OptionsExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Window options = new WindowOptions();
+            options.ShowDialog();
+        }
     }
 
     public static class CompilerCommand
@@ -154,9 +161,16 @@ namespace Sharped
         {
             new KeyGesture(Key.F5, ModifierKeys.Control)
         };
+        public static InputGestureCollection optionsGestureCollection = new InputGestureCollection()
+        {
+            new KeyGesture(Key.F7, ModifierKeys.Alt)
+        };
+
         public static readonly RoutedUICommand Compile =
             new RoutedUICommand("Compile", "Compile", typeof(WindowMain), compileGestureCollection);
         public static readonly RoutedUICommand Run =
             new RoutedUICommand("Run compiled application", "Run", typeof(WindowMain), runGestureCollection);
+        public static readonly RoutedUICommand Options =
+            new RoutedUICommand("Options", "Options", typeof(WindowMain), optionsGestureCollection);
     }
 }

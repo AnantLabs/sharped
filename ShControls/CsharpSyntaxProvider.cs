@@ -71,6 +71,7 @@ namespace ShControls
             }
         }
 
+        // index of bracketed subexpression of regexp which is actual text to highlight
         public int HIGHLIGHT_GROUP_INDEX = 2;
     }
 }

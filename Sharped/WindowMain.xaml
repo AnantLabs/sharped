@@ -12,6 +12,7 @@
         <CommandBinding Command="SaveAs" Executed="SaveAsExecuted" />
         <CommandBinding Command="Sharped:CompilerCommand.Compile" Executed="CompileExecuted" CanExecute="SaveCanExecute"/>
         <CommandBinding Command="Sharped:CompilerCommand.Run" Executed="RunExecuted" CanExecute="RunCanExecute"/>
+        <CommandBinding Command="Sharped:CompilerCommand.Options" Executed="OptionsExecuted" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -39,6 +40,7 @@
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Find..."  ToolTip="Find item" Command="Search"/>
+                <MenuItem Header="_Options..."  ToolTip="Preferences" Command="Sharped:CompilerCommand.Options"/>
             </MenuItem>
             <MenuItem Header="_Build">
                 <MenuItem Header="_Compile"  ToolTip="Compile program" Command="Sharped:CompilerCommand.Compile"/>
