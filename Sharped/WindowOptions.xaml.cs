@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Sharped.Controls.Properties;
 
 namespace Sharped.Controls
 {
@@ -21,6 +22,22 @@ namespace Sharped.Controls
         public WindowOptions()
         {
             InitializeComponent();
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.Save();
+        }
+
+        private void OK_Click(object sender, RoutedEventArgs e)
+        {
+            Apply_Click(sender, e);
+            this.Close();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

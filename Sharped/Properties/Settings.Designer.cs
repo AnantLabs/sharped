@@ -22,5 +22,29 @@ namespace Sharped.Controls.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\Windows\\\\Microsoft.NET\\\\Framework\\\\v3.5\\\\Csc.exe")]
+        public string CompilerPath {
+            get {
+                return ((string)(this["CompilerPath"]));
+            }
+            set {
+                this["CompilerPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/r:System.dll /out:\"{0}.exe\" \"{1}\"")]
+        public string CompilerOptions {
+            get {
+                return ((string)(this["CompilerOptions"]));
+            }
+            set {
+                this["CompilerOptions"] = value;
+            }
+        }
     }
 }
