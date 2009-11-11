@@ -100,10 +100,9 @@ namespace Sharped
             Process compiler = new Process();
             compiler.StartInfo.CreateNoWindow = true;
             compiler.StartInfo.FileName = Settings.Default.CompilerPath;
-            compiler.StartInfo.Arguments =
-                String.Format(Settings.Default.CompilerOptions,
-                Path.GetFileName(codeBox.Filename), codeBox.Filename
-            );
+            string arguments = Settings.Default.CompilerOptions;
+            arguments = arguments.Replace("{SourceFile}", "\"" + codeBox.Filename + "\"");
+            compiler.StartInfo.Arguments = arguments;
             compiler.StartInfo.UseShellExecute = false;
             compiler.StartInfo.RedirectStandardOutput = true;
             compiler.Start();
@@ -116,6 +115,7 @@ namespace Sharped
             tbOutput.Text += compiler.StandardOutput.ReadToEnd();
 
             compiler.WaitForExit();
+            tbOutput.Text += "Finished\r\n";
             tbOutput.ScrollToEnd();
         }
 
@@ -123,7 +123,7 @@ namespace Sharped
         {
             Process program = new Process();
             program.StartInfo.CreateNoWindow = true;
-            program.StartInfo.FileName = String.Format("{0}.exe", Path.GetFileName(codeBox.Filename));
+            program.StartInfo.FileName = String.Format("{0}.exe", codeBox.Filename);
             program.StartInfo.UseShellExecute = false;
             program.StartInfo.RedirectStandardOutput = true;
             program.Start();
@@ -141,7 +141,7 @@ namespace Sharped
         private void RunCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = File.Exists(
-                String.Format("{0}.exe", Path.GetFileName(codeBox.Filename))
+                String.Format("{0}.exe", codeBox.Filename)
                 );
         }
 

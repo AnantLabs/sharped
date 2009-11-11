@@ -75,7 +75,7 @@
             </RichTextBox.Resources>
             <FlowDocument>
                 <Paragraph>
-                    Empty
+                    
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
