@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Sharped.Controls;
+using Sharped.Controls.Properties;
 using ShControls;
 using System.Diagnostics;
 using System.IO;
@@ -98,9 +99,9 @@ namespace Sharped
         {
             Process compiler = new Process();
             compiler.StartInfo.CreateNoWindow = true;
-            compiler.StartInfo.FileName = "C:\\Windows\\Microsoft.NET\\Framework\\v3.5\\Csc.exe";
+            compiler.StartInfo.FileName = Settings.Default.CompilerPath;
             compiler.StartInfo.Arguments =
-                String.Format("/r:System.dll /out:\"{0}.exe\" \"{1}\"",
+                String.Format(Settings.Default.CompilerOptions,
                 Path.GetFileName(codeBox.Filename), codeBox.Filename
             );
             compiler.StartInfo.UseShellExecute = false;
