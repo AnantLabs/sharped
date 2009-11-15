@@ -6,7 +6,10 @@
       <Value Profile="(Default)">C:\\Windows\\Microsoft.NET\\Framework\\v3.5\\Csc.exe</Value>
     </Setting>
     <Setting Name="CompilerOptions" Type="System.String" Scope="User">
-      <Value Profile="(Default)">/r:System.dll /out:{SourceFile}.exe {SourceFile}</Value>
+      <Value Profile="(Default)">/r:System.dll</Value>
+    </Setting>
+    <Setting Name="OutputFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{SourceFile}.exe</Value>
     </Setting>
   </Settings>
 </SettingsFile>

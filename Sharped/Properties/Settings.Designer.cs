@@ -37,13 +37,25 @@ namespace Sharped.Controls.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("/r:System.dll /out:{SourceFile}.exe {SourceFile}")]
+        [global::System.Configuration.DefaultSettingValueAttribute("/r:System.dll")]
         public string CompilerOptions {
             get {
                 return ((string)(this["CompilerOptions"]));
             }
             set {
                 this["CompilerOptions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{SourceFile}.exe")]
+        public string OutputFile {
+            get {
+                return ((string)(this["OutputFile"]));
+            }
+            set {
+                this["OutputFile"] = value;
             }
         }
     }

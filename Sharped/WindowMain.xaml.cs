@@ -19,6 +19,8 @@ namespace Sharped
         /// </summary>
         public static readonly DependencyProperty IsMainMenuVisibleProperty;
 
+        string _compiledFilename = "";
+
         static WindowMain()
         {
             var metadata = new FrameworkPropertyMetadata();
@@ -100,9 +102,14 @@ namespace Sharped
             Process compiler = new Process();
             compiler.StartInfo.CreateNoWindow = true;
             compiler.StartInfo.FileName = Settings.Default.CompilerPath;
-            string arguments = Settings.Default.CompilerOptions;
-            arguments = arguments.Replace("{SourceFile}", "\"" + codeBox.Filename + "\"");
-            compiler.StartInfo.Arguments = arguments;
+
+            string compiledFilename = Settings.Default.OutputFile.Replace("{SourceFile}", codeBox.Filename);
+            compiler.StartInfo.Arguments = String.Format(
+                "{0} /out:\"{1}\" \"{2}\"",
+                Settings.Default.CompilerOptions,
+                compiledFilename,
+                codeBox.Filename
+            );
             compiler.StartInfo.UseShellExecute = false;
             compiler.StartInfo.RedirectStandardOutput = true;
             compiler.Start();
@@ -114,6 +121,9 @@ namespace Sharped
                 );
             tbOutput.Text += compiler.StandardOutput.ReadToEnd();
 
+            // TODO: if no errors in compiler output
+            _compiledFilename = compiledFilename;
+
             compiler.WaitForExit();
             tbOutput.Text += "Finished\r\n";
             tbOutput.ScrollToEnd();
@@ -122,14 +132,11 @@ namespace Sharped
         private void RunExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             Process program = new Process();
-            program.StartInfo.CreateNoWindow = true;
-            program.StartInfo.FileName = String.Format("{0}.exe", codeBox.Filename);
+            program.StartInfo.CreateNoWindow = false;
+            program.StartInfo.FileName = _compiledFilename;
             program.StartInfo.UseShellExecute = false;
-            program.StartInfo.RedirectStandardOutput = true;
+            program.StartInfo.RedirectStandardOutput = false;
             program.Start();
-
-            tbOutput.Text += program.StandardOutput.ReadToEnd();
-
             program.WaitForExit();
         }
 
@@ -140,9 +147,7 @@ namespace Sharped
 
         private void RunCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = File.Exists(
-                String.Format("{0}.exe", codeBox.Filename)
-                );
+            e.CanExecute = File.Exists(_compiledFilename);
         }
 
         private void OptionsExecuted(object sender, ExecutedRoutedEventArgs e)
