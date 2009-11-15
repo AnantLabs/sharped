@@ -1,5 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using Sharped.Controls;
 using Sharped.Controls.Properties;
@@ -33,6 +36,10 @@ namespace Sharped
         public WindowMain()
         {
             InitializeComponent();
+
+            Binding titleBinding = new Binding("Filename");
+            titleBinding.Source = codeBox;
+            this.SetBinding(Window.TitleProperty, titleBinding);
         }
 
         public bool IsMainMenuVisible
@@ -89,7 +96,7 @@ namespace Sharped
 
         private void SaveCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = codeBox.Filename != "";
+            e.CanExecute = codeBox.Dirty;
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

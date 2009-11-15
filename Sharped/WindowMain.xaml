@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:custom="clr-namespace:ShControls;assembly=ShControls"
     xmlns:Sharped="clr-namespace:Sharped"
-    Title="Sharped" Height="353" Width="639" PreviewKeyUp="Window_PreviewKeyUp">
+    Height="353" Width="639" PreviewKeyUp="Window_PreviewKeyUp"
+    Title="{Binding AppTitle}" >
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="NewExecuted" />
         <CommandBinding Command="Open" Executed="OpenExecuted" />
@@ -22,7 +23,7 @@
         <Grid.RowDefinitions>
             <RowDefinition  Height="20"></RowDefinition>
             <RowDefinition  Height="8*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu Name="mainMenu" HorizontalAlignment="Left" VerticalAlignment="Top" > 
             <!--
@@ -49,7 +50,6 @@
         </Menu>
         <custom:CodeArea Grid.Row="1" Name="codeBox">
         </custom:CodeArea>
-        <TextBox Grid.Row="2" FontFamily="CournerNew" FontSize="10" Name="tbOutput" TextWrapping="Wrap">
-        </TextBox>
+        <TextBox Grid.Row="2" FontFamily="CournerNew" FontSize="10" Name="tbOutput" TextWrapping="Wrap" />
     </Grid>
 </Window>

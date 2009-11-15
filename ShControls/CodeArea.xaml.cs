@@ -18,7 +18,9 @@ namespace ShControls
         /// <summary>
         /// file loaded in editor
         /// </summary>
-        private string _filename = "";
+        private string _filename = "NoName";
+
+        private bool _dirty = false;
 
         private CsharpSyntaxProvider _syntaxProvider = new CsharpSyntaxProvider();
 
@@ -52,6 +54,12 @@ namespace ShControls
             get { return _filename; }
         }
 
+        public bool Dirty
+        {
+            get { return _dirty; }
+            set { _dirty = value; }
+        }
+
         public void LoadFromFile(string filename)
         {
             var documentTextRange = new TextRange(codeBox.Document.ContentStart,
@@ -62,13 +70,14 @@ namespace ShControls
             }
             HighlightAsNeeded();
             _filename = filename;
+            _dirty = false;
         }
 
         public void Save()
         {
             if (Filename == "")
             {
-                // open saveas dialog
+                // TODO: open SaveAs dialog
                 return;
             }
             SaveToFile(Filename);
@@ -77,6 +86,8 @@ namespace ShControls
 
         private void codeBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            Dirty = true;
+
             if (codeBox.Document == null)
                 return;
 
@@ -188,6 +199,7 @@ namespace ShControls
                 documentTextRange.Save(fs, DataFormats.Text);
             }
             _filename = filename;
+            _dirty = false;
         }
 
         private void codeBox_MouseDown(object sender, MouseButtonEventArgs e)
