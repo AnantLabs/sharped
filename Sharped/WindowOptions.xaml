@@ -11,7 +11,7 @@
     </Window.Resources>
 
     <Grid>
-        <DockPanel>
+        <DockPanel Margin="5">
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="OK" Width="100" Click="OK_Click"/>
                 <Button Content="Cancel" Width="100" Click="Cancel_Click" />

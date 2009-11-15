@@ -22,11 +22,14 @@ namespace Sharped.Controls
         public WindowOptions()
         {
             InitializeComponent();
+
+            ApplyButton.IsEnabled = false;
         }
 
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.Save();
+            ApplyButton.IsEnabled = false;
         }
 
         private bool ApplyButtonEnabled()
