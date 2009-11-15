@@ -3,29 +3,32 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="WindowOptions" Height="311" Width="500"
     xmlns:settings="clr-namespace:Sharped.Controls.Properties" ResizeMode="NoResize">
-    
-    <Window.Resources >
+
+    <Window.Resources>
         <ResourceDictionary>
             <settings:Settings x:Key="Settings" />
         </ResourceDictionary>
     </Window.Resources>
-    
+
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Apply" Width="100" Click="Apply_Click"/>
-                <Button Content="Cancel" Width="100" Click="Cancel_Click" />
                 <Button Content="OK" Width="100" Click="OK_Click"/>
+                <Button Content="Cancel" Width="100" Click="Cancel_Click" />
+                <Button Content="Apply" Name="ApplyButton" Width="100" Click="Apply_Click" />
             </StackPanel>
             <StackPanel>
                 <Label Content="Compiler path" />
-                <TextBox Name="tbCompilerPath"
-                         Text="{Binding Source={x:Static settings:Settings.Default}, Path=CompilerPath}" />
+                <TextBox Text="{Binding Source={x:Static settings:Settings.Default}, Path=CompilerPath}" 
+                         TextChanged="Settings_changed"/>
 
+                    <Label Content="Compiler arguments" />
+                    <TextBox Text="{Binding Source={x:Static settings:Settings.Default}, Path=CompilerOptions}" 
+                             TextChanged="Settings_changed"/>
 
-                <Label Content="Compiler options" />
-                <TextBox Name="tbCompilerOptions"
-                         Text="{Binding Source={x:Static settings:Settings.Default}, Path=CompilerOptions}" />
+                    <Label Content="Output file" />
+                    <TextBox Text="{Binding Source={x:Static settings:Settings.Default}, Path=OutputFile}" 
+                             TextChanged="Settings_changed"/>
             </StackPanel>
         </DockPanel>
     </Grid>

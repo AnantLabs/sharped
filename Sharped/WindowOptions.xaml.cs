@@ -29,6 +29,11 @@ namespace Sharped.Controls
             Settings.Default.Save();
         }
 
+        private bool ApplyButtonEnabled()
+        {
+            return false;
+        }
+
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             Apply_Click(sender, e);
@@ -38,6 +43,11 @@ namespace Sharped.Controls
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Settings_changed(object sender, TextChangedEventArgs e)
+        {
+            ApplyButton.IsEnabled = true;
         }
     }
 }
