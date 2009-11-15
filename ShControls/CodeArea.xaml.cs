@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -23,6 +24,8 @@ namespace ShControls
         private bool _dirty = false;
 
         private CsharpSyntaxProvider _syntaxProvider = new CsharpSyntaxProvider();
+        
+        private const string NEW_FILENAME = "NoName";
 
         public CodeArea()
         {
@@ -49,9 +52,12 @@ namespace ShControls
         /// <summary>
         /// file loaded in editor
         /// </summary>
+        public static readonly DependencyProperty FilenameProperty =
+            DependencyProperty.Register("Filename", typeof(string), typeof(CodeArea), new PropertyMetadata(NEW_FILENAME));
         public string Filename
         {
-            get { return _filename; }
+            get { return (string)GetValue(FilenameProperty); }
+            set { SetValue(FilenameProperty, value); }
         }
 
         public bool Dirty
@@ -69,7 +75,7 @@ namespace ShControls
                 documentTextRange.Load(fs, DataFormats.Text);
             }
             HighlightAsNeeded();
-            _filename = filename;
+            Filename = filename;
             _dirty = false;
         }
 
@@ -188,6 +194,8 @@ namespace ShControls
         public void Clear()
         {
             codeBox.Document.Blocks.Clear();
+            Filename = NEW_FILENAME;
+            Dirty = false;
         }
 
         public void SaveToFile(string filename)
@@ -198,7 +206,7 @@ namespace ShControls
             {
                 documentTextRange.Save(fs, DataFormats.Text);
             }
-            _filename = filename;
+            Filename = filename;
             _dirty = false;
         }
 

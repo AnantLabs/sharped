@@ -3,8 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:custom="clr-namespace:ShControls;assembly=ShControls"
     xmlns:Sharped="clr-namespace:Sharped"
-    Height="353" Width="639" PreviewKeyUp="Window_PreviewKeyUp"
-    Title="{Binding AppTitle}" >
+    Height="353" Width="639" PreviewKeyUp="Window_PreviewKeyUp" 
+    Title="{Binding ElementName=codeBox, Path=Filename}" >
+    
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="NewExecuted" />
         <CommandBinding Command="Open" Executed="OpenExecuted" />
