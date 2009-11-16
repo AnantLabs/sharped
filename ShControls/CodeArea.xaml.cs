@@ -302,5 +302,13 @@ namespace ShControls
             // HACK: make the RichTextBox think it did not lose focus
             e.Handled = true;
         }
+
+        private void SearchPanel_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                SearchPanel.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }

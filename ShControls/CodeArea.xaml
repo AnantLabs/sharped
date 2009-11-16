@@ -55,15 +55,15 @@
             </Style>
         </DockPanel.Resources>
         <StackPanel Name="SearchPanel" Orientation="Horizontal" Visibility="Collapsed" 
-                    DockPanel.Dock="Bottom">
+                    DockPanel.Dock="Bottom" KeyUp="SearchPanel_KeyUp">
             <Button Name="closeButton" Content="X" Style="{StaticResource RedCloseButton}"
                     Click="SwitchSearchPanelVisibility" Width="20" Height="20" Margin="5" />
             <Label>Find:</Label>
             <TextBox Name="tbSearchFor" Width="150" TextChanged="tbSearchFor_TextChanged"></TextBox>
             <Button Margin="1">Next</Button>
             <Button Margin="1">Previous</Button>
-            <CheckBox Name="cbMatchCase" VerticalAlignment="Center">Match case</CheckBox>
-            <CheckBox Name="cbWholeWord"  VerticalAlignment="Center">Whole word</CheckBox>
+            <CheckBox Name="cbMatchCase" VerticalAlignment="Center" Margin="5">Match case</CheckBox>
+            <CheckBox Name="cbWholeWord"  VerticalAlignment="Center" Margin="5" >Whole word</CheckBox>
             <Label Name="lblStatus"></Label>
         </StackPanel>
         <RichTextBox Name="codeBox" TextChanged="codeBox_TextChanged"
