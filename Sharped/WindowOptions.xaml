@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Sharped.Controls.WindowOptions"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="WindowOptions" Height="311" Width="500"
+    Title="Sharped - Options" Height="311" Width="500"
     xmlns:settings="clr-namespace:Sharped.Controls.Properties" ResizeMode="NoResize">
 
     <Window.Resources>
@@ -13,9 +13,9 @@
     <Grid>
         <DockPanel Margin="5">
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="OK" Width="100" Click="OK_Click"/>
-                <Button Content="Cancel" Width="100" Click="Cancel_Click" />
-                <Button Content="Apply" Name="ApplyButton" Width="100" Click="Apply_Click" />
+                <Button Content="OK" Width="100" Margin="5" Click="OK_Click"/>
+                <Button Content="Cancel" Width="100" Margin="5" Click="Cancel_Click" />
+                <Button Content="Apply" Name="ApplyButton" Width="100" Margin="5" Click="Apply_Click" />
             </StackPanel>
             <StackPanel>
                 <Label Content="Compiler path" />
