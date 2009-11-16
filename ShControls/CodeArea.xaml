@@ -62,7 +62,7 @@
             <TextBox Name="tbSearchFor" Width="150" TextChanged="tbSearchFor_TextChanged"
                      KeyUp="tbSearchFor_KeyUp"></TextBox>
             <Button Margin="1" Click="NextButton_Click">Next</Button>
-            <Button Margin="1" Click="PrevButton_Click">Previous</Button>
+            <!--<Button Margin="1" Click="PrevButton_Click">Previous</Button>-->
             <CheckBox Name="cbMatchCase" VerticalAlignment="Center" Margin="5">Match case</CheckBox>
             <CheckBox Name="cbWholeWord"  VerticalAlignment="Center" Margin="5" >Whole word</CheckBox>
             <Label Name="lblStatus" Margin="5"></Label>
