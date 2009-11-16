@@ -245,19 +245,21 @@ namespace ShControls
             }
         }
 
-        private void FindAndSelect(string findText, FindOptions findOptions)
+        private void FindAndSelect(string findText, FindOptions findOptions, TextPointer from)
         {
             if (String.IsNullOrEmpty(findText))
             {
                 return;
             }
 
+
+            SearchStatus("");
             if (_findAndReplaceManager == null)
             {
                 _findAndReplaceManager = new FindAndReplaceManager(codeBox.Document);
             }
 
-            _findAndReplaceManager.CurrentPosition = codeBox.Document.ContentStart;
+            _findAndReplaceManager.CurrentPosition = from;
 
             TextRange textRange = _findAndReplaceManager.FindNext(findText, findOptions);
             if (textRange != null)
@@ -282,18 +284,22 @@ namespace ShControls
 
         private void tbSearchFor_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (cbMatchCase == null || tbSearchFor == null)
+            if (tbSearchFor == null)
                 return;
 
+            FindOptions findOptions = GetFindOptions();
+            FindAndSelect(tbSearchFor.Text, findOptions, codeBox.Document.ContentStart);
+        }
+
+        private FindOptions GetFindOptions()
+        {
             FindOptions findOptions = FindOptions.None;
             if (cbMatchCase.IsChecked == true)
                 findOptions |= FindOptions.MatchCase;
 
             if (cbWholeWord.IsChecked == true)
                 findOptions |= FindOptions.MatchWholeWord;
-
-            SearchStatus("");
-            FindAndSelect(tbSearchFor.Text, findOptions);
+            return findOptions;
         }
 
         private void codeBox_LostFocus(object sender, RoutedEventArgs e)
@@ -308,7 +314,32 @@ namespace ShControls
             if (e.Key == Key.Escape)
             {
                 SearchPanel.Visibility = Visibility.Collapsed;
+                codeBox.Focus();
             }
+        }
+
+        private void tbSearchFor_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                NextButton_Click(sender, e);
+            }
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            FindOptions findOptions = GetFindOptions();
+            FindAndSelect(tbSearchFor.Text, findOptions, codeBox.CaretPosition);
+            codeBox.Focus();
+            tbSearchFor.Focus();
+        }
+
+        private void PrevButton_Click(object sender, RoutedEventArgs e)
+        {
+            FindOptions findOptions = GetFindOptions();
+            FindAndSelect(tbSearchFor.Text, findOptions, codeBox.CaretPosition);
+            codeBox.Focus();
+            tbSearchFor.Focus();
         }
     }
 }

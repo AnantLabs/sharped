@@ -12,7 +12,7 @@
         <CommandBinding Command="Save" Executed="SaveExecuted" CanExecute="SaveCanExecute"/>
         <CommandBinding Command="Search" Executed="SearchExecuted" />
         <CommandBinding Command="SaveAs" Executed="SaveAsExecuted" />
-        <CommandBinding Command="Sharped:CompilerCommand.Compile" Executed="CompileExecuted" CanExecute="SaveCanExecute"/>
+        <CommandBinding Command="Sharped:CompilerCommand.Compile" Executed="CompileExecuted" />
         <CommandBinding Command="Sharped:CompilerCommand.Run" Executed="RunExecuted" CanExecute="RunCanExecute"/>
         <CommandBinding Command="Sharped:CompilerCommand.Options" Executed="OptionsExecuted" />
     </Window.CommandBindings>
@@ -41,7 +41,10 @@
                 <MenuItem Header="_Exit" ToolTip="Close application" Click="Exit_Click"/>
             </MenuItem>
             <MenuItem Header="_Edit">
+                <MenuItem Header="_Undo" ToolTip="Undo last change" Command="Undo"/>
+                <!--<MenuItem Header="_Redo" ToolTip="Redo last change" Command="Redo"/>-->
                 <MenuItem Header="_Find..."  ToolTip="Find item" Command="Search"/>
+                <Separator/>
                 <MenuItem Header="_Options..."  ToolTip="Preferences" Command="Sharped:CompilerCommand.Options"/>
             </MenuItem>
             <MenuItem Header="_Build">
@@ -51,6 +54,6 @@
         </Menu>
         <custom:CodeArea Grid.Row="1" Name="codeBox">
         </custom:CodeArea>
-        <TextBox Grid.Row="2" FontFamily="CournerNew" FontSize="10" Name="tbOutput" TextWrapping="Wrap" />
+        <TextBox Grid.Row="2" FontFamily="CournerNew" FontSize="10" Name="tbOutput" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
     </Grid>
 </Window>
