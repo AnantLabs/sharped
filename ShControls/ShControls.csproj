@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="CsharpSyntaxProvider.cs" />
     <Compile Include="FileDialog.cs" />
+    <Compile Include="FindAndReplaceManager.cs" />
     <Compile Include="OpenFileDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

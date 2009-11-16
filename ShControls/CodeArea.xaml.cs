@@ -20,11 +20,12 @@ namespace ShControls
         /// file loaded in editor
         /// </summary>
         private string _filename = "NoName";
+        private FindAndReplaceManager _findAndReplaceManager;
 
         private bool _dirty = false;
 
         private CsharpSyntaxProvider _syntaxProvider = new CsharpSyntaxProvider();
-        
+
         private const string NEW_FILENAME = "NoName";
 
         public CodeArea()
@@ -53,10 +54,12 @@ namespace ShControls
         /// file loaded in editor
         /// </summary>
         public static readonly DependencyProperty FilenameProperty =
-            DependencyProperty.Register("Filename", typeof(string), typeof(CodeArea), new PropertyMetadata(NEW_FILENAME));
+            DependencyProperty.Register("Filename", typeof (string), typeof (CodeArea),
+                                        new PropertyMetadata(NEW_FILENAME));
+
         public string Filename
         {
-            get { return (string)GetValue(FilenameProperty); }
+            get { return (string) GetValue(FilenameProperty); }
             set { SetValue(FilenameProperty, value); }
         }
 
@@ -159,9 +162,9 @@ namespace ShControls
                     TextPointer end = rangeToHighlight.Start.GetPositionAtOffset(endIndex);
                     var tokenRange = new TextRange(start, end);
                     tokenRange.ApplyPropertyValue(TextElement.ForegroundProperty,
-                                         new SolidColorBrush(comment.ForegroundColor));
+                                                  new SolidColorBrush(comment.ForegroundColor));
                     tokenRange.ApplyPropertyValue(TextElement.FontWeightProperty,
-                                                 comment.FontWeight);
+                                                  comment.FontWeight);
                 }
                 if (matches.Count > 0)
                     return;
@@ -175,7 +178,8 @@ namespace ShControls
                 MatchCollection matches = reToken.Matches(rangeToHighlight.Text);
                 foreach (Match m in matches)
                 {
-                    int startIndex = m.Groups[_syntaxProvider.HIGHLIGHT_GROUP_INDEX].Index; // highlight first groupn in ()
+                    int startIndex = m.Groups[_syntaxProvider.HIGHLIGHT_GROUP_INDEX].Index;
+                    // highlight first groupn in ()
                     int endIndex = startIndex + m.Groups[_syntaxProvider.HIGHLIGHT_GROUP_INDEX].Length;
                     TextPointer start = rangeToHighlight.Start.GetPositionAtOffset(startIndex);
                     TextPointer end = rangeToHighlight.Start.GetPositionAtOffset(endIndex);
@@ -232,11 +236,71 @@ namespace ShControls
             if (SearchPanel.Visibility == Visibility.Collapsed)
             {
                 SearchPanel.Visibility = Visibility.Visible;
+                tbSearchFor.Focus();
             }
             else
             {
                 SearchPanel.Visibility = Visibility.Collapsed;
+                codeBox.Focus();
             }
+        }
+
+        private void FindAndSelect(string findText, FindOptions findOptions)
+        {
+            if (String.IsNullOrEmpty(findText))
+            {
+                return;
+            }
+
+            if (_findAndReplaceManager == null)
+            {
+                _findAndReplaceManager = new FindAndReplaceManager(codeBox.Document);
+            }
+
+            _findAndReplaceManager.CurrentPosition = codeBox.Document.ContentStart;
+
+            TextRange textRange = _findAndReplaceManager.FindNext(findText, findOptions);
+            if (textRange != null)
+            {
+                codeBox.Selection.Select(textRange.Start, textRange.End);
+            }
+            else
+            {
+                if (_findAndReplaceManager.CurrentPosition.CompareTo(codeBox.Document.ContentEnd) == 0)
+                {
+                    SearchStatus("End of the document reached: nothing was found");
+                    codeBox.CaretPosition = codeBox.Document.ContentStart;
+                    _findAndReplaceManager.CurrentPosition = codeBox.CaretPosition;
+                }
+            }
+        }
+
+        private void SearchStatus(string msg)
+        {
+            lblStatus.Content = msg;
+        }
+
+        private void tbSearchFor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (cbMatchCase == null || tbSearchFor == null)
+                return;
+
+            FindOptions findOptions = FindOptions.None;
+            if (cbMatchCase.IsChecked == true)
+                findOptions |= FindOptions.MatchCase;
+
+            if (cbWholeWord.IsChecked == true)
+                findOptions |= FindOptions.MatchWholeWord;
+
+            SearchStatus("");
+            FindAndSelect(tbSearchFor.Text, findOptions);
+        }
+
+        private void codeBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            // When the RichTextBox loses focus the user can no longer see the selection.
+            // HACK: make the RichTextBox think it did not lose focus
+            e.Handled = true;
         }
     }
 }
